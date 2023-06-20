@@ -57,10 +57,10 @@ class DBStorage:
                     key = '{}.{}'.format(obj.__class__.__name__, obj.id)
                     objs[key] = obj
 
-        query = self.__session.query(clss).all()
+        """query = self.__session.query(clss).all()
         for obj in query:
             key = '{}.{}'.format(obj.__class__.__name__, obj.id)
-            objs[key] = obj
+            objs[key] = obj"""
         
         return objs
 
