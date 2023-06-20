@@ -10,3 +10,6 @@ class City(BaseModel, Base):
     __tablename__ = 'cities'
     name = Column(String(128), nullable=False)
     state_id = Column(String(60), nullable=False, ForeignKey("states.id", ondelete="CASCADE"))
+
+    places = relationship('models.place.Place', backref='cities',
+                           cascade='all, delete')
