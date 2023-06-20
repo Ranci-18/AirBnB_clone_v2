@@ -23,17 +23,17 @@ class DBStorage:
         """initialize instances"""
         user = os.environ.get('HBNB_MYSQL_USER')
         password = os.environ.get('HBNB_MYSQL_PWD')
-        host = os.environ.get('HBNB_MYSQL_HOST', 'localhost')
+        host = os.environ.get('HBNB_MYSQL_HOST')
         db = os.environ.get('HBNB_MYSQL_DB')
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                                       .format(user, password, host, db)
                                       ,pool_pre_ping=True)
         
         if os.environ.get('HBNB_ENV') == 'test':
-            Base.metadata.drop_all(bind=self.__engine)
+            Base.metadata.drop_all(bind=self.__engine, checkfirst=True)
 
-        Base.metadata.drop_all(bind=self.__engine)
+        #Base.metadata.drop_all(bind=self.__engine)
         
         Session = scoped_session(sessionmaker(
             bind=self.__engine,
@@ -45,11 +45,12 @@ class DBStorage:
         """query on the current db session
         (self.__session) all objects depending
         of the class name (argument cls)"""
-        cls_lst = [User, State, Amenity, Place, Review, City]
+        cls_objs = ["User": User, "State": State, "Amenity": Amenity,
+                    "Place": Place, "Review": Review, "City": City]
         objs = {}
 
         if cls=None:
-            for cls in cls_lst:
+            for cls in cls_objs:
                 query = self.__session.query(cls)
                 for obj in query:
                     key = '{}.{}'.format(type(obj).__name__, obj.id)
