@@ -49,17 +49,18 @@ class DBStorage:
                     "Place": Place, "Review": Review, "City": City]
         objs = {}
 
-        if cls=None:
-            for cls in cls_objs:
+        
+        for cls in cls_objs:
+            if cls=None:
                 query = self.__session.query(cls)
                 for obj in query:
-                    key = '{}.{}'.format(type(obj).__name__, obj.id)
+                    key = '{}.{}'.format(obj.__class__.__name__, obj.id)
                     objs[key] = obj
-        else:
-            query = self.__session.query(cls)
-            for obj in query:
-                key = '{}.{}'.format(type(obj).__name__, obj.id)
-                objs[key] = obj
+
+        query = self.__session.query(cls)
+        for obj in query:
+            key = '{}.{}'.format(obj.__class__.__name__, obj.id)
+            objs[key] = obj
         
         return objs
 
