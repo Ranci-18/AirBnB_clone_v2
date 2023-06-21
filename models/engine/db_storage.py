@@ -45,13 +45,13 @@ class DBStorage:
         """query on the current db session
         (self.__session) all objects depending
         of the class name (argument cls)"""
-        cls_objs = ["User": User, "State": State, "Amenity": Amenity,
-                    "Place": Place, "Review": Review, "City": City]
+        cls_objs = {"User": User, "State": State, "Amenity": Amenity,
+                    "Place": Place, "Review": Review, "City": City}
         objs = {}
 
         
         for clss in cls_objs:
-            if cls=None:
+            if cls == None:
                 query = self.__session.query(clss).all()
                 for obj in query:
                     key = '{}.{}'.format(obj.__class__.__name__, obj.id)
