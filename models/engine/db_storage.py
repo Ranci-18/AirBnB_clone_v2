@@ -43,26 +43,27 @@ class DBStorage:
         self.__session = Session()
 
     def all(self, cls=None):
-        """returns a dictionary
-        Return:
-            returns a dictionary of __object
-        """
-        dic = {}
-        if cls:
-            if type(cls) is str:
-                cls = eval(cls)
-            query = self.__session.query(cls)
-            for elem in query:
-                key = "{}.{}".format(type(elem).__name__, elem.id)
-                dic[key] = elem
-        else:
-            lista = [State, City, User, Place, Review, Amenity]
-            for clase in lista:
-                query = self.__session.query(clase)
-                for elem in query:
-                    key = "{}.{}".format(type(elem).__name__, elem.id)
-                    dic[key] = elem
-        return (dic)
+        """query on the current db session
+        (self.__session) all objects depending
+        of the class name (argument cls)"""
+        cls_objs = {"User": User, "State": State, "Amenity": Amenity,
+                    "Place": Place, "Review": Review, "City": City}
+        objs = {}
+
+        
+        for clss in cls_objs:
+            if cls == None:
+                query = self.__session.query(clss).all()
+                for obj in query:
+                    key = '{}.{}'.format(obj.__class__.__name__, obj.id)
+                    objs[key] = obj
+
+        """query = self.__session.query(clss).all()
+        for obj in query:
+            key = '{}.{}'.format(obj.__class__.__name__, obj.id)
+            objs[key] = obj"""
+        
+        return objs
 
     def new(self, obj):
         """add the object to the current db session"""
