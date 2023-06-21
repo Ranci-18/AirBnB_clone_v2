@@ -19,14 +19,8 @@ class BaseModel:
     updated_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
 
     def __init__(self, *args, **kwargs):
-        """Instantiation of base model class
-        Args:
-            args: it won't be used
-            kwargs: arguments for the constructor of the BaseModel
-        Attributes:
-            id: unique id generated
-            created_at: creation date
-            updated_at: updated date
+        """
+        Instantiation of base model
         """
         if kwargs:
             for key, value in kwargs.items():
@@ -45,9 +39,8 @@ class BaseModel:
             self.created_at = self.updated_at = datetime.now()
 
     def __str__(self):
-        """returns a string
-        Return:
-            returns a string of class name, id, and dictionary
+        """
+        returns a string
         """
         return "[{}] ({}) {}".format(
             type(self).__name__, self.id, self.__dict__)
