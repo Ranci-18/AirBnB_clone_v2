@@ -10,12 +10,13 @@ import os.path
 
 def do_pack():
     """function to generate .tgx archive"""
-    try:
-        if not os.path.exists("versions"):
-            local("mkdir versions")
-        date = datetime.now().strftime("%Y%m%d%H%M%S")
-        archive = "versions/web_static_{:s}.tgz".format(date)
-        local("tar -cvzf {:s} web_static".format(archive))
+    if not os.path.exists("versions"):
+        local("mkdir versions")
+    date = datetime.now().strftime("%Y%m%d%H%M%S")
+    archive = "versions/web_static_{:s}.tgz".format(date)
+    local("tar -cvzf {:s} web_static".format(archive))
+    
+    if os.path.exists(archive):
         return archive
-    except:
+    else:
         return None
