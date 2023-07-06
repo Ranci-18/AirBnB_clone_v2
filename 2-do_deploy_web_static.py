@@ -2,7 +2,8 @@
 """Fabric script that generates a .tgz
 archive from the contents of the web_static
 folder of your AirBnB Clone repo,
-using the function do_pack and Fabric script (based on the file 1-pack_web_static.py)
+using the function do_pack and Fabric script
+(based on the file 1-pack_web_static.py)
 that distributes an archive to your web servers,
 using the function do_deploy"""
 from fabric.api import *
@@ -24,7 +25,7 @@ def do_pack():
         archive = "versions/web_static_{:s}.tgz".format(date)
         local("tar -cvzf {:s} web_static".format(archive))
         return archive
-    except:
+    except Exception:
         return None
 
 
@@ -33,11 +34,13 @@ def do_deploy(archive_path):
     if not os.path.exists(archive_path):
         return False
     archive_filename = os.path.basename(archive_path)
-    release_path = "/data/web_static/releases/{}/".format(archive_filename[:-4])
+    release_path = "/data/web_static/releases/{}/"\
+        .format(archive_filename[:-4])
     try:
         put(archive_path, "/tmp/{:s}".format(archive_filename))
         run("mkdir -p {:s}".format(release_path))
-        run("tar -xzf /tmp/{:s} -C {:s}".format(archive_filename, release_path))
+        run("tar -xzf /tmp/{:s} -C {:s}"
+            .format(archive_filename, release_path))
         run("rm /tmp/{:s}".format(archive_filename))
         run("mv {:s}/web_static/* {:s}/".format(release_path, release_path))
         run("rm -rf {:s}/web_static".format(release_path))
@@ -45,5 +48,5 @@ def do_deploy(archive_path):
         run("ln -s {:s} /data/web_static/current".format(release_path))
         print("New version deployed!")
         return True
-    except:
+    except Exception:
         return False
