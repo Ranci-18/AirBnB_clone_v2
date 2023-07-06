@@ -17,5 +17,5 @@ def do_pack():
         archive = "versions/web_static_{:s}.tgz".format(date)
         local("tar -cvzf {:s} web_static".format(archive))
         return archive
-    except:
+    except Exception:
         return None
