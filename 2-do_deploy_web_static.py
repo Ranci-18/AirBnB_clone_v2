@@ -34,7 +34,7 @@ def do_deploy(archive_path):
     if not os.path.exists(archive_path):
         return False
     archive_filename = os.path.basename(archive_path)
-    release_path = "/data/web_static/releases/" + archive_filename[:-4]
+    release_path = "/data/web_static/releases/{}/".format(archive_filename[:-4])
     try:
         put(archive_path, "/tmp/")
         run("mkdir -p {:s}".format(release_path))
