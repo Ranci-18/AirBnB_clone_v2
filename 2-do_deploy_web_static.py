@@ -11,6 +11,11 @@ from fabric.api import local
 from datetime import datetime
 
 
+env.hosts = ['54.236.25.73', '52.91.178.190']
+env.key_filename = "~/.ssh/school"
+env.user = "ubuntu"
+
+
 def do_pack():
     """function to generate .tgx archive"""
     try:
@@ -22,10 +27,6 @@ def do_pack():
         return archive
     except:
         return None
-
-env.hosts = ['54.236.25.73 web-01', '52.91.178.190 web-02']
-env.key_filename = "~/.ssh/school"
-env.user = "ubuntu"
 
 
 @task
