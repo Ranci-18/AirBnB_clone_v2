@@ -12,7 +12,6 @@ from datetime import datetime
 
 
 env.hosts = ['<54.236.25.73 web-01>', '52.91.178.190 web-02']
-env.key_filename = "~/.ssh/school"
 env.user = "ubuntu"
 
 
