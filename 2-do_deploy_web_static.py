@@ -36,7 +36,7 @@ def do_deploy(archive_path):
     archive_filename = os.path.basename(archive_path)
     release_path = "/data/web_static/releases/{}/".format(archive_filename[:-4])
     try:
-        put(archive_path, "/tmp/")
+        put(archive_path, "/tmp/{:s}".format(archive_filename))
         run("mkdir -p {:s}".format(release_path))
         run("tar -xzf /tmp/{:s} -C {:s}".format(archive_filename, release_path))
         run("rm /tmp/{:s}".format(archive_filename))
