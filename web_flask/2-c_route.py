@@ -22,7 +22,7 @@ def hbnb():
 def display_text(text):
     """/c/<text> function"""
     spaced_text = text.replace('_', ' ')
-    return 'c {}'.format(spaced_text)
+    return 'c/{}'.format(spaced_text)
 
 
 if __name__ == '__main__':
