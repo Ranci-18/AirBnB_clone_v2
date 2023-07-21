@@ -25,7 +25,7 @@ def display_text(text):
 
 
 @app.route('/python/', strict_slashes=False)
-@app.route('/python/(<text>)', strict_slashes=False)
+@app.route('/python/<text>', strict_slashes=False)
 def display_python_text(text='is cool'):
     """diplay python text"""
     if text is not 'is cool':
